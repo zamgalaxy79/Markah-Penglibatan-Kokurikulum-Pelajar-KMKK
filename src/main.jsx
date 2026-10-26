@@ -1,36 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Award, Printer, Plus, Trash2, ArrowLeft } from 'lucide-react';
 
 function App() {
+  const defaultData = [
+    { id: '1', nama: 'AHMAD AMIN BIN ROSLI', noKp: '080512-02-1234', kelas: 'K1P1', unit: 'Kadet Remaja Sekolah', markahUnit: 88, kelab: 'Kelab Robotik', markahKelab: 82, sukan: 'Bola Sepak', markahSukan: 75, ekstra: 8 }
+  ];
+
   const [muridList, setMuridList] = useState(() => {
-    const saved = localStorage.getItem('koko_data');
-    return saved ? JSON.parse(saved) : [
-      { id: '1', nama: 'AHMAD AMIN BIN ROSLI', noKp: '080512-02-1234', kelas: '5 ARIF', unit: 'Kadet Remaja Sekolah', markahUnit: 88, kelab: 'Kelab Robotik', markahKelab: 82, sukan: 'Bola Sepak', markahSukan: 75, ekstra: 8 }
-    ];
+    try {
+      const saved = localStorage.getItem('koko_kmkk_data_v2');
+      return saved ? JSON.parse(saved) : defaultData;
+    } catch {
+      return defaultData;
+    }
   });
 
-  const [form, setForm] = useState({ nama: '', noKp: '', kelas: '', unit: '', markahUnit: '', kelab: '', markahKelab: '', sukan: '', markahSukan: '', ekstra: '' });
+  const [form, setForm] = useState({ 
+    nama: '', noKp: '', kelas: '', unit: '', markahUnit: '', kelab: '', markahKelab: '', sukan: '', markahSukan: '', ekstra: '' 
+  });
+  
   const [selectedMurid, setSelectedMurid] = useState(null);
   const [editId, setEditId] = useState(null);
 
-  // LOGO TUNGGAL DI TENGAH (Logo Rasmi Jata Malaysia / KPM)
+  // Logo KMKK Berbingkai di bahagian tengah
   const logoKpmTengah = "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Logo_KMKK_Berbingkai.png/960px-Logo_KMKK_Berbingkai.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220223050841";
 
   useEffect(() => {
-    localStorage.setItem('koko_data', JSON.stringify(muridList));
+    localStorage.setItem('koko_kmkk_data_v2', JSON.stringify(muridList));
   }, [muridList]);
 
   const handleSimpan = (e) => {
     e.preventDefault();
-    if (!form.nama) return alert('Sila isi nama murid terlebih dahulu');
+    if (!form.nama.trim()) return alert('Sila isi nama pelajar terlebih dahulu');
 
     if (editId) {
-      // Mod Kemaskini Rekod Sedia Ada
       setMuridList(muridList.map(item => item.id === editId ? { ...form, id: editId } : item));
       setEditId(null);
     } else {
-      // Mod Tambah Rekod Baharu
       setMuridList([...muridList, { ...form, id: Date.now().toString() }]);
     }
 
@@ -53,9 +59,11 @@ function App() {
     const k = Math.min(100, Math.max(0, Number(m.markahKelab) || 0));
     const s = Math.min(100, Math.max(0, Number(m.markahSukan) || 0));
     const e = Math.min(10, Math.max(0, Number(m.ekstra) || 0));
+    
     const sorted = [u, k, s].sort((a, b) => b - a);
     const purata = (sorted[0] + sorted[1]) / 2;
     const jumlah = Math.min(100, purata + e);
+    
     let gred = 'E';
     if (jumlah >= 80) gred = 'A';
     else if (jumlah >= 60) gred = 'B';
@@ -68,17 +76,32 @@ function App() {
     const { jumlah, gred } = kiraGred(selectedMurid);
     return (
       <div style={{ padding: '20px', fontFamily: 'Georgia, serif', backgroundColor: '#f3f4f6', minHeight: '100vh' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto 15px auto', display: 'flex', justifyContent: 'space-between' }}>
-          <button onClick={() => setSelectedMurid(null)} style={{ padding: '8px 16px', cursor: 'pointer', background: '#4b5563', color: '#fff', border: 'none', borderRadius: '4px' }}>
-            Kembali
+        <style dangerouslySetInnerHTML={{__html: `
+          @media print {
+            body { background: #fff !important; margin: 0 !important; }
+            .no-print { display: none !important; }
+            .print-certificate {
+              border: 12px double #b45309 !important;
+              box-shadow: none !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              padding: 30px !important;
+              page-break-after: avoid !important;
+            }
+          }
+        `}} />
+
+        <div className="no-print" style={{ maxWidth: '900px', margin: '0 auto 15px auto', display: 'flex', justifyContent: 'space-between' }}>
+          <button onClick={() => setSelectedMurid(null)} style={{ padding: '8px 18px', cursor: 'pointer', background: '#4b5563', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold' }}>
+            ← Kembali
           </button>
-          <button onClick={() => window.print()} style={{ padding: '8px 20px', background: '#2563eb', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold', borderRadius: '4px' }}>
-            Cetak Sijil (PDF)
+          <button onClick={() => window.print()} style={{ padding: '8px 24px', background: '#2563eb', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold', borderRadius: '4px' }}>
+            🖨️ Cetak Sijil (PDF)
           </button>
         </div>
 
-        {/* BAHAGIAN SIJIL (A4 LANDSKAP) */}
-        <div style={{
+        {/* SIJIL RASMI (A4 LANDSKAP) */}
+        <div className="print-certificate" style={{
           maxWidth: '900px',
           margin: '0 auto',
           background: '#fff',
@@ -88,17 +111,17 @@ function App() {
           textAlign: 'center',
           boxSizing: 'border-box'
         }}>
-          {/* BAHAGIAN 1 LOGO DI TENGAH & NAMA SEKOLAH */}
+          {/* LOGO DI TENGAH */}
           <div style={{ borderBottom: '2px solid #b45309', paddingBottom: '15px', marginBottom: '20px' }}>
             <img 
               src={logoKpmTengah} 
-              alt="Logo KPM" 
-              style={{ height: '75px', objectFit: 'contain', margin: '0 auto 10px auto', display: 'block' }} 
+              alt="Logo KMKK" 
+              style={{ height: '80px', objectFit: 'contain', margin: '0 auto 10px auto', display: 'block' }} 
             />
             <h4 style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px', color: '#4b5563', fontSize: '13px' }}>
-              Kementerian Pendidikan
+              KEMENTERIAN PENDIDIKAN MALAYSIA
             </h4>
-            <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '20px' }}>
+            <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '22px', fontWeight: 'bold' }}>
               KOLEJ MATRIKULASI KEJURUTERAAN KEDAH
             </h2>
           </div>
@@ -106,7 +129,7 @@ function App() {
           <h1 style={{ color: '#b45309', fontSize: '26px', margin: '15px 0 5px 0', letterSpacing: '1px' }}>
             SIJIL PENGHARGAAN KOKURIKULUM
           </h1>
-          <p style={{ fontStyle: 'italic', color: '#6b7280', margin: '0 0 15px 0' }}>
+          <p style={{ fontStyle: 'italic', color: '#6b7280', margin: '0 0 15px 0', fontSize: '15px' }}>
             Dengan ini diperakui dan disahkan bahawa
           </p>
 
@@ -114,14 +137,14 @@ function App() {
             {selectedMurid.nama.toUpperCase()}
           </h2>
           <p style={{ margin: '5px 0 20px 0', fontSize: '15px', color: '#374151' }}>
-            No. Kad Pengenalan: <strong>{selectedMurid.noKp}</strong> &nbsp;|&nbsp; Tutorial: <strong>{selectedMurid.kelas}</strong>
+            No. Kad Pengenalan: <strong>{selectedMurid.noKp || '-'}</strong> &nbsp;|&nbsp; Tutorial: <strong>{selectedMurid.kelas || '-'}</strong>
           </p>
 
           <p style={{ fontSize: '14px', color: '#4b5563' }}>
             Telah mencapai prestasi seperti berikut dalam aktiviti kokurikulum:
           </p>
 
-          {/* JADUAL MARKAH */}
+          {/* JADUAL PERINCIAN MARKAH */}
           <div style={{ maxWidth: '650px', margin: '15px auto', background: '#fafafa', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '12px 20px' }}>
             <table style={{ width: '100%', fontSize: '14px', textAlign: 'left', borderCollapse: 'collapse' }}>
               <tbody>
@@ -174,24 +197,4 @@ function App() {
 
   return (
     <div style={{ maxWidth: '850px', margin: '30px auto', fontFamily: 'Arial, sans-serif', padding: '0 15px' }}>
-      <h2 style={{ color: '#1e3a8a' }}>Sistem Markah & Sijil Kokurikulum</h2>
-      
-      {/* BORANG DAFTAR / KEMASKINI */}
-      <form onSubmit={handleSimpan} style={{ background: '#fff', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-        <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>
-          {editId ? '📝 Kemaskini Rekod Pelajar:' : '➕ Daftar Pelajar Baharu:'}
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <input placeholder="Nama Penuh Pelajar" value={form.nama} onChange={e => setForm({...form, nama: e.target.value})} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input placeholder="No. KP (cth: 080101-02-1234)" value={form.noKp} onChange={e => setForm({...form, noKp: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input placeholder="Tutorial" value={form.kelas} onChange={e => setForm({...form, kelas: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input placeholder="Badan Beruniform" value={form.unit} onChange={e => setForm({...form, unit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" min="0" max="100" placeholder="Markah Unit (0-100)" value={form.markahUnit} onChange={e => setForm({...form, markahUnit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input placeholder="Kelab / Persatuan" value={form.kelab} onChange={e => setForm({...form, kelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" min="0" max="100" placeholder="Markah Kelab (0-100)" value={form.markahKelab} onChange={e => setForm({...form, markahKelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input placeholder="Sukan / Permainan" value={form.sukan} onChange={e => setForm({...form, sukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" min="0" max="100" placeholder="Markah Sukan (0-100)" value={form.markahSukan} onChange={e => setForm({...form, markahSukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" min="0" max="10" placeholder="Ekstra Kurikulum (0-10)" value={form.ekstra} onChange={e => setForm({...form, ekstra: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-        </div>
-        <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
-          <button type="submit" style={{ padding: '10px 18px', background: editId ? '#
+      <div style={{ display: 'flex', justifyContent: 'space-
