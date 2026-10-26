@@ -159,9 +159,9 @@ function App() {
       <form onSubmit={handleSimpan} style={{ background: '#fff', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
         <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>Daftar Murid Baharu:</p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <input placeholder="Nama Penuh Murid" value={form.nama} onChange={e => setForm({...form, nama: e.target.value})} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input placeholder="Nama Penuh Pelajar" value={form.nama} onChange={e => setForm({...form, nama: e.target.value})} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="No. KP (cth: 080101-02-1234)" value={form.noKp} onChange={e => setForm({...form, noKp: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input placeholder="Kelas / Tingkatan" value={form.kelas} onChange={e => setForm({...form, kelas: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input placeholder="Tutorial" value={form.kelas} onChange={e => setForm({...form, kelas: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Badan Beruniform" value={form.unit} onChange={e => setForm({...form, unit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input type="number" min="0" max="100" placeholder="Markah Unit (0-100)" value={form.markahUnit} onChange={e => setForm({...form, markahUnit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Kelab / Persatuan" value={form.kelab} onChange={e => setForm({...form, kelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
@@ -171,18 +171,18 @@ function App() {
           <input type="number" min="0" max="100" placeholder="Ekstra Kurikulum (0-10)" value={form.ekstra} onChange={e => setForm({...form, ekstra: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
         </div>
         <button type="submit" style={{ marginTop: '12px', padding: '10px 18px', background: '#059669', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-          Simpan Rekod Murid
+          Simpan Rekod Pelajar
         </button>
       </form>
 
       {/* SENARAI MURID */}
-      <h3 style={{ marginTop: '30px', color: '#374151' }}>Senarai Rekod Murid</h3>
+      <h3 style={{ marginTop: '30px', color: '#374151' }}>Senarai Rekod Pelajar</h3>
       <table border="1" cellPadding="10" style={{ width: '100%', borderCollapse: 'collapse', background: '#fff', borderColor: '#e5e7eb' }}>
         <thead>
           <tr style={{ background: '#f8fafc', textAlign: 'left' }}>
             <th>Nama</th>
             <th>No. KP</th>
-            <th>Kelas</th>
+            <th>Tutorial</th>
             <th>Gred</th>
             <th style={{ textAlign: 'center' }}>Tindakan</th>
           </tr>
