@@ -163,12 +163,12 @@ function App() {
           <input placeholder="No. KP (cth: 080101-02-1234)" value={form.noKp} onChange={e => setForm({...form, noKp: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Kelas / Tingkatan" value={form.kelas} onChange={e => setForm({...form, kelas: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Badan Beruniform" value={form.unit} onChange={e => setForm({...form, unit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" placeholder="Markah Unit (0-100)" value={form.markahUnit} onChange={e => setForm({...form, markahUnit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input type="number" min="0" max="100" placeholder="Markah Unit (0-100)" value={form.markahUnit} onChange={e => setForm({...form, markahUnit: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Kelab / Persatuan" value={form.kelab} onChange={e => setForm({...form, kelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" placeholder="Markah Kelab (0-100)" value={form.markahKelab} onChange={e => setForm({...form, markahKelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input type="number" min="0" max="100" placeholder="Markah Kelab (0-100)" value={form.markahKelab} onChange={e => setForm({...form, markahKelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Sukan / Permainan" value={form.sukan} onChange={e => setForm({...form, sukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" placeholder="Markah Sukan (0-100)" value={form.markahSukan} onChange={e => setForm({...form, markahSukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" placeholder="Ekstra Kurikulum (0-10)" value={form.ekstra} onChange={e => setForm({...form, ekstra: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input type="number" min="0" max="100" placeholder="Markah Sukan (0-100)" value={form.markahSukan} onChange={e => setForm({...form, markahSukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input type="number" min="0" max="100" placeholder="Ekstra Kurikulum (0-10)" value={form.ekstra} onChange={e => setForm({...form, ekstra: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
         </div>
         <button type="submit" style={{ marginTop: '12px', padding: '10px 18px', background: '#059669', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
           Simpan Rekod Murid
