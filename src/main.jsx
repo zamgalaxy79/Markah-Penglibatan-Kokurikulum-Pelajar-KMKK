@@ -125,12 +125,12 @@ function App() {
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '45px', padding: '0 40px' }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{ width: '190px', borderBottom: '1px solid #111', marginBottom: '6px' }}></div>
-              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENOLONG KANAN KOKURIKULUM</p>
+              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>KETUA JABATAN PENGURUSAN PELAJAR</p>
               <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>Tarikh: {new Date().toLocaleDateString('ms-MY')}</p>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div style={{ width: '190px', borderBottom: '1px solid #111', marginBottom: '6px' }}></div>
-              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENGETUA / GURU BESAR</p>
+              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENGARAH</p>
               <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>SMK Contoh</p>
             </div>
           </div>
