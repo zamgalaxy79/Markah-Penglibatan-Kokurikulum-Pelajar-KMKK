@@ -73,7 +73,7 @@ function App() {
             <img src={logoKiri} alt="Logo Rasmi" style={{ height: '70px', objectFit: 'contain' }} />
             <div>
               <h4 style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px', color: '#4b5563', fontSize: '13px' }}>Kementerian Pendidikan Malaysia</h4>
-              <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '20px' }}>SEKOLAH MENENGAH KEBANGSAAN CONTOH</h2>
+              <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '20px' }}>KOLEJ MATRIKULASI KEJURUTERAAN KEDAH</h2>
             </div>
             <img src={logoKanan} alt="Logo Sekolah" style={{ height: '70px', objectFit: 'contain' }} />
           </div>
