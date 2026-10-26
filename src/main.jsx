@@ -6,7 +6,7 @@ function App() {
   const [muridList, setMuridList] = useState(() => {
     const saved = localStorage.getItem('koko_data');
     return saved ? JSON.parse(saved) : [
-      { id: '1', nama: 'AHMAD AMIN BIN ROSLI', noKp: '080512-02-1234', kelas: '5 ARIF', unit: 'Kadet Remaja Sekolah', markahUnit: 88, kelab: 'Kelab Robotik', markahKelab: 82, sukan: 'Bola Sepak', markahSukan: 75, ekstra: 8 }
+      { id: '1', nama: 'MOHAMMAD ARIFFIN BIN ABD AZIZ', noKp: '080512-02-1234', kelas: '5 ARIF', unit: 'Kadet Remaja Sekolah', markahUnit: 88, kelab: 'Kelab Robotik', markahKelab: 82, sukan: 'Bola Sepak', markahSukan: 75, ekstra: 8 }
     ];
   });
 
