@@ -28,10 +28,10 @@ function App() {
   };
 
   const kiraGred = (m) => {
-    const u = Number(m.markahUnit) || 0;
-    const k = Number(m.markahKelab) || 0;
-    const s = Number(m.markahSukan) || 0;
-    const e = Number(m.ekstra) || 0;
+    const u = Math.min(100, Math.max(0, Number(m.markahUnit) || 0));
+    const k = Math.min(100, Math.max(0, Number(m.markahKelab) || 0));
+    const s = Math.min(100, Math.max(0, Number(m.markahSukan) || 0));
+    const e = Math.min(10, Math.max(0, Number(m.ekstra) || 0));
     const sorted = [u, k, s].sort((a, b) => b - a);
     const purata = (sorted[0] + sorted[1]) / 2;
     const jumlah = Math.min(100, purata + e);
