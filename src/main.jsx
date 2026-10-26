@@ -12,6 +12,7 @@ function App() {
 
   const [form, setForm] = useState({ nama: '', noKp: '', kelas: '', unit: '', markahUnit: '', kelab: '', markahKelab: '', sukan: '', markahSukan: '', ekstra: '' });
   const [selectedMurid, setSelectedMurid] = useState(null);
+  const [editId, setEditId] = useState(null);
 
   // LOGO TUNGGAL DI TENGAH (Logo Rasmi Jata Malaysia / KPM)
   const logoKpmTengah = "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Logo_KMKK_Berbingkai.png/960px-Logo_KMKK_Berbingkai.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220223050841";
@@ -23,7 +24,27 @@ function App() {
   const handleSimpan = (e) => {
     e.preventDefault();
     if (!form.nama) return alert('Sila isi nama murid terlebih dahulu');
-    setMuridList([...muridList, { ...form, id: Date.now().toString() }]);
+
+    if (editId) {
+      // Mod Kemaskini Rekod Sedia Ada
+      setMuridList(muridList.map(item => item.id === editId ? { ...form, id: editId } : item));
+      setEditId(null);
+    } else {
+      // Mod Tambah Rekod Baharu
+      setMuridList([...muridList, { ...form, id: Date.now().toString() }]);
+    }
+
+    setForm({ nama: '', noKp: '', kelas: '', unit: '', markahUnit: '', kelab: '', markahKelab: '', sukan: '', markahSukan: '', ekstra: '' });
+  };
+
+  const handleEdit = (m) => {
+    setForm(m);
+    setEditId(m.id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBatalEdit = () => {
+    setEditId(null);
     setForm({ nama: '', noKp: '', kelas: '', unit: '', markahUnit: '', kelab: '', markahKelab: '', sukan: '', markahSukan: '', ekstra: '' });
   };
 
@@ -93,7 +114,7 @@ function App() {
             {selectedMurid.nama.toUpperCase()}
           </h2>
           <p style={{ margin: '5px 0 20px 0', fontSize: '15px', color: '#374151' }}>
-            No. Kad Pengenalan: <strong>{selectedMurid.noKp}</strong> &nbsp;|&nbsp; Tingkatan / Kelas: <strong>{selectedMurid.kelas}</strong>
+            No. Kad Pengenalan: <strong>{selectedMurid.noKp}</strong> &nbsp;|&nbsp; Tutorial: <strong>{selectedMurid.kelas}</strong>
           </p>
 
           <p style={{ fontSize: '14px', color: '#4b5563' }}>
@@ -142,8 +163,8 @@ function App() {
             </div>
             <div style={{ textAlign: 'center' }}>
               <div style={{ width: '190px', borderBottom: '1px solid #111', marginBottom: '6px' }}></div>
-              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENGETUA / GURU BESAR</p>
-              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>SMK Contoh</p>
+              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENGARAH / PENGETUA</p>
+              <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>Kolej Matrikulasi Kejuruteraan Kedah</p>
             </div>
           </div>
         </div>
@@ -155,9 +176,11 @@ function App() {
     <div style={{ maxWidth: '850px', margin: '30px auto', fontFamily: 'Arial, sans-serif', padding: '0 15px' }}>
       <h2 style={{ color: '#1e3a8a' }}>Sistem Markah & Sijil Kokurikulum</h2>
       
-      {/* BORANG DAFTAR */}
+      {/* BORANG DAFTAR / KEMASKINI */}
       <form onSubmit={handleSimpan} style={{ background: '#fff', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-        <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>Daftar Murid Baharu:</p>
+        <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>
+          {editId ? '📝 Kemaskini Rekod Pelajar:' : '➕ Daftar Pelajar Baharu:'}
+        </p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <input placeholder="Nama Penuh Pelajar" value={form.nama} onChange={e => setForm({...form, nama: e.target.value})} required style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="No. KP (cth: 080101-02-1234)" value={form.noKp} onChange={e => setForm({...form, noKp: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
@@ -168,46 +191,7 @@ function App() {
           <input type="number" min="0" max="100" placeholder="Markah Kelab (0-100)" value={form.markahKelab} onChange={e => setForm({...form, markahKelab: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input placeholder="Sukan / Permainan" value={form.sukan} onChange={e => setForm({...form, sukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           <input type="number" min="0" max="100" placeholder="Markah Sukan (0-100)" value={form.markahSukan} onChange={e => setForm({...form, markahSukan: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          <input type="number" min="0" max="100" placeholder="Ekstra Kurikulum (0-10)" value={form.ekstra} onChange={e => setForm({...form, ekstra: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+          <input type="number" min="0" max="10" placeholder="Ekstra Kurikulum (0-10)" value={form.ekstra} onChange={e => setForm({...form, ekstra: e.target.value})} style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
         </div>
-        <button type="submit" style={{ marginTop: '12px', padding: '10px 18px', background: '#059669', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-          Simpan Rekod Pelajar
-        </button>
-      </form>
-
-      {/* SENARAI MURID */}
-      <h3 style={{ marginTop: '30px', color: '#374151' }}>Senarai Rekod Pelajar</h3>
-      <table border="1" cellPadding="10" style={{ width: '100%', borderCollapse: 'collapse', background: '#fff', borderColor: '#e5e7eb' }}>
-        <thead>
-          <tr style={{ background: '#f8fafc', textAlign: 'left' }}>
-            <th>Nama</th>
-            <th>No. KP</th>
-            <th>Tutorial</th>
-            <th>Gred</th>
-            <th style={{ textAlign: 'center' }}>Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          {muridList.map(m => (
-            <tr key={m.id} style={{ borderBottom: '1px solid #e5e7eb' }}>
-              <td><strong>{m.nama}</strong></td>
-              <td>{m.noKp}</td>
-              <td>{m.kelas}</td>
-              <td><strong>{kiraGred(m).gred}</strong></td>
-              <td style={{ textAlign: 'center' }}>
-                <button onClick={() => setSelectedMurid(m)} style={{ marginRight: '8px', background: '#2563eb', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}>
-                  Cetak Sijil
-                </button>
-                <button onClick={() => setMuridList(muridList.filter(x => x.id !== m.id))} style={{ background: '#dc2626', color: '#fff', border: 'none', padding: '6px 10px', borderRadius: '4px', cursor: 'pointer' }}>
-                  Padam
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+        <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
+          <button type="submit" style={{ padding: '10px 18px', background: editId ? '#
