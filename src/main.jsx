@@ -14,7 +14,7 @@ function App() {
   const [selectedMurid, setSelectedMurid] = useState(null);
 
   // LOGO BOLEH DITUKAR DI SINI (Gantikan pautan URL jika ada logo sendiri)
-  const logoKiri = "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Logo_KMKK_Berbingkai.png/960px-Logo_KMKK_Berbingkai.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220223050841"; // Logo KPM / Jata Negara
+  const logoKiri = "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Logo_KMKK_Berbingkai.png/960px-Logo_KMKK_Berbingkai.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220223050841"; // Logo KMKK / Jata Negara
   const logoKanan = "https://cdn-icons-png.flaticon.com/512/2997/2997322.png"; // Lencana / Logo Sekolah
 
   useEffect(() => {
