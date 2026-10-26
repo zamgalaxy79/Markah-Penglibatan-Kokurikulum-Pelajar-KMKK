@@ -6,16 +6,15 @@ function App() {
   const [muridList, setMuridList] = useState(() => {
     const saved = localStorage.getItem('koko_data');
     return saved ? JSON.parse(saved) : [
-      { id: '1', nama: 'MOHAMMAD ARIFFIN BIN ABD AZIZ', noKp: '080512-02-1234', kelas: '5 ARIF', unit: 'Kadet Remaja Sekolah', markahUnit: 88, kelab: 'Kelab Robotik', markahKelab: 82, sukan: 'Bola Sepak', markahSukan: 75, ekstra: 8 }
+      { id: '1', nama: 'AHMAD AMIN BIN ROSLI', noKp: '080512-02-1234', kelas: '5 ARIF', unit: 'Kadet Remaja Sekolah', markahUnit: 88, kelab: 'Kelab Robotik', markahKelab: 82, sukan: 'Bola Sepak', markahSukan: 75, ekstra: 8 }
     ];
   });
 
   const [form, setForm] = useState({ nama: '', noKp: '', kelas: '', unit: '', markahUnit: '', kelab: '', markahKelab: '', sukan: '', markahSukan: '', ekstra: '' });
   const [selectedMurid, setSelectedMurid] = useState(null);
 
-  // LOGO BOLEH DITUKAR DI SINI (Gantikan pautan URL jika ada logo sendiri)
-  const logoKiri = "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Logo_KMKK_Berbingkai.png/960px-Logo_KMKK_Berbingkai.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220223050841"; // Logo KMKK / Jata Negara
-  const logoKanan = "https://cdn-icons-png.flaticon.com/512/2997/2997322.png"; // Lencana / Logo Sekolah
+  // LOGO TUNGGAL DI TENGAH (Logo Rasmi Jata Malaysia / KPM)
+  const logoKpmTengah = "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Logo_KMKK_Berbingkai.png/960px-Logo_KMKK_Berbingkai.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20220223050841";
 
   useEffect(() => {
     localStorage.setItem('koko_data', JSON.stringify(muridList));
@@ -57,7 +56,7 @@ function App() {
           </button>
         </div>
 
-        {/* BAHAGIAN PAPARAN SIJIL RASMI (A4 LANDSKAP) */}
+        {/* BAHAGIAN SIJIL (A4 LANDSKAP) */}
         <div style={{
           maxWidth: '900px',
           margin: '0 auto',
@@ -68,27 +67,40 @@ function App() {
           textAlign: 'center',
           boxSizing: 'border-box'
         }}>
-          {/* LOGO & KEPALA SIJIL */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #b45309', paddingBottom: '15px', marginBottom: '20px' }}>
-            <img src={logoKiri} alt="Logo Rasmi" style={{ height: '70px', objectFit: 'contain' }} />
-            <div>
-              <h4 style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px', color: '#4b5563', fontSize: '13px' }}>Kementerian Pendidikan Malaysia</h4>
-              <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '20px' }}>KOLEJ MATRIKULASI KEJURUTERAAN KEDAH</h2>
-            </div>
-            <img src={logoKanan} alt="Logo Sekolah" style={{ height: '70px', objectFit: 'contain' }} />
+          {/* BAHAGIAN 1 LOGO DI TENGAH & NAMA SEKOLAH */}
+          <div style={{ borderBottom: '2px solid #b45309', paddingBottom: '15px', marginBottom: '20px' }}>
+            <img 
+              src={logoKpmTengah} 
+              alt="Logo KPM" 
+              style={{ height: '75px', objectFit: 'contain', margin: '0 auto 10px auto', display: 'block' }} 
+            />
+            <h4 style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px', color: '#4b5563', fontSize: '13px' }}>
+              Kementerian Pendidikan Malaysia
+            </h4>
+            <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '20px' }}>
+              SEKOLAH MENENGAH KEBANGSAAN CONTOH
+            </h2>
           </div>
 
-          <h1 style={{ color: '#b45309', fontSize: '26px', margin: '15px 0 5px 0', letterSpacing: '1px' }}>SIJIL PENGHARGAAN KOKURIKULUM</h1>
-          <p style={{ fontStyle: 'italic', color: '#6b7280', margin: '0 0 15px 0' }}>Dengan ini diperakui dan disahkan bahawa</p>
+          <h1 style={{ color: '#b45309', fontSize: '26px', margin: '15px 0 5px 0', letterSpacing: '1px' }}>
+            SIJIL PENGHARGAAN KOKURIKULUM
+          </h1>
+          <p style={{ fontStyle: 'italic', color: '#6b7280', margin: '0 0 15px 0' }}>
+            Dengan ini diperakui dan disahkan bahawa
+          </p>
 
-          <h2 style={{ fontSize: '24px', color: '#111827', textDecoration: 'underline', margin: '10px 0' }}>{selectedMurid.nama.toUpperCase()}</h2>
+          <h2 style={{ fontSize: '24px', color: '#111827', textDecoration: 'underline', margin: '10px 0' }}>
+            {selectedMurid.nama.toUpperCase()}
+          </h2>
           <p style={{ margin: '5px 0 20px 0', fontSize: '15px', color: '#374151' }}>
             No. Kad Pengenalan: <strong>{selectedMurid.noKp}</strong> &nbsp;|&nbsp; Tingkatan / Kelas: <strong>{selectedMurid.kelas}</strong>
           </p>
 
-          <p style={{ fontSize: '14px', color: '#4b5563' }}>Telah mencapai prestasi seperti berikut dalam aktiviti kokurikulum:</p>
+          <p style={{ fontSize: '14px', color: '#4b5563' }}>
+            Telah mencapai prestasi seperti berikut dalam aktiviti kokurikulum:
+          </p>
 
-          {/* JADUAL PERINCIAN MARKAH */}
+          {/* JADUAL MARKAH */}
           <div style={{ maxWidth: '650px', margin: '15px auto', background: '#fafafa', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '12px 20px' }}>
             <table style={{ width: '100%', fontSize: '14px', textAlign: 'left', borderCollapse: 'collapse' }}>
               <tbody>
@@ -125,12 +137,12 @@ function App() {
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '45px', padding: '0 40px' }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{ width: '190px', borderBottom: '1px solid #111', marginBottom: '6px' }}></div>
-              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>KETUA JABATAN PENGURUSAN PELAJAR</p>
+              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENOLONG KANAN KOKURIKULUM</p>
               <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>Tarikh: {new Date().toLocaleDateString('ms-MY')}</p>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div style={{ width: '190px', borderBottom: '1px solid #111', marginBottom: '6px' }}></div>
-              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENGARAH</p>
+              <p style={{ margin: 0, fontSize: '13px', fontWeight: 'bold' }}>PENGETUA / GURU BESAR</p>
               <p style={{ margin: 0, fontSize: '12px', color: '#6b7280' }}>SMK Contoh</p>
             </div>
           </div>
@@ -143,7 +155,7 @@ function App() {
     <div style={{ maxWidth: '850px', margin: '30px auto', fontFamily: 'Arial, sans-serif', padding: '0 15px' }}>
       <h2 style={{ color: '#1e3a8a' }}>Sistem Markah & Sijil Kokurikulum</h2>
       
-      {/* BORANG DAFTAR MURID */}
+      {/* BORANG DAFTAR */}
       <form onSubmit={handleSimpan} style={{ background: '#fff', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
         <p style={{ margin: '0 0 10px 0', fontWeight: 'bold' }}>Daftar Murid Baharu:</p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -163,7 +175,7 @@ function App() {
         </button>
       </form>
 
-      {/* SENARAI REKOD MURID */}
+      {/* SENARAI MURID */}
       <h3 style={{ marginTop: '30px', color: '#374151' }}>Senarai Rekod Murid</h3>
       <table border="1" cellPadding="10" style={{ width: '100%', borderCollapse: 'collapse', background: '#fff', borderColor: '#e5e7eb' }}>
         <thead>
