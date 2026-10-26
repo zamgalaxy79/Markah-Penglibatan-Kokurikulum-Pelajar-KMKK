@@ -75,10 +75,10 @@ function App() {
               style={{ height: '75px', objectFit: 'contain', margin: '0 auto 10px auto', display: 'block' }} 
             />
             <h4 style={{ margin: 0, textTransform: 'uppercase', letterSpacing: '2px', color: '#4b5563', fontSize: '13px' }}>
-              Kementerian Pendidikan Malaysia
+              Kementerian Pendidikan
             </h4>
             <h2 style={{ margin: '5px 0 0 0', color: '#1e3a8a', fontSize: '20px' }}>
-              SEKOLAH MENENGAH KEBANGSAAN CONTOH
+              KOLEJ MATRIKULASI KEJURUTERAAN KEDAH
             </h2>
           </div>
 
